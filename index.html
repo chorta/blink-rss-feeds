@@ -5,26 +5,27 @@
 <meta http-equiv="content-language" content="en" />
 <title>FeedEk jQuery RSS/ATOM Feed Plugin Demo | jQuery RSS/ATOM Parser Plugin FeedEk Demo</title>
 
-<link href="FeedEk/css/FeedEk.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
 <div class="rssDiv">
     <p><strong>Research Feed</strong></p>
-    <div id="divRss3"></div>
+    <div id="research-rss"></div>
 
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-<script type="text/javascript" src="FeedEk/js/FeedEk.js"></script>
+<script type="text/javascript" src="https://blink.ucsd.edu/_resources/js/feedek/feedek.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
 
-      $('#divRss3').FeedEk({
-          FeedUrl: 'http://jquery-plugins.net/rss',
+      $('#research-rss').FeedEk({
+          FeedUrl: 'http://ucsdnews.ucsd.edu/rss/research',
           MaxCount: 5,
-          ShowDesc: false
+          ShowDesc: false,
+          TitleLinkTarget:'_self',
+          ShowPubDate: false
       });
     });
 

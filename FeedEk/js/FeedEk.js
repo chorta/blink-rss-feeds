@@ -1,7 +1,7 @@
 /*
 * FeedEk jQuery RSS/ATOM Feed Plugin v3.0 with YQL API
 * http://jquery-plugins.net/FeedEk/FeedEk.html  https://github.com/enginkizil/FeedEk
-* Author : Engin KIZIL http://www.enginkizil.com   
+* Author : Engin KIZIL http://www.enginkizil.com
 */
 
 (function ($) {
@@ -15,11 +15,11 @@
             DateFormat: "",
             DateFormatLang:"en"
         }, opt);
-        
+
         var id = $(this).attr("id"), i, s = "", dt;
         $("#" + id).empty();
-        if (def.FeedUrl == undefined) return;       
-        $("#" + id).append('<img src="loader.gif" />');
+        if (def.FeedUrl == undefined) return;
+        $("#" + id).append('<img src="https://blink.ucsd.edu/_resources/images/loader.gif" />');
 
         var YQLstr = 'SELECT channel.item FROM feednormalizer WHERE output="rss_2.0" AND url ="' + def.FeedUrl + '" LIMIT ' + def.MaxCount;
 
@@ -31,9 +31,25 @@
                 if (!(data.query.results.rss instanceof Array)) {
                     data.query.results.rss = [data.query.results.rss];
                 }
+
+                if (def.ShowPubDate){
+                    dt = new Date(itm.channel.item.pubDate);
+                    s += '<div class="itemDate">';
+                    if ($.trim(def.DateFormat).length > 0) {
+                        try {
+                            moment.lang(def.DateFormatLang);
+                            s += moment(dt).format(def.DateFormat);
+                        }
+                        catch (e){s += dt.toLocaleDateString();}
+                    }
+                    else {
+                        s += dt.toLocaleDateString();
+                    }
+                    s += '</div>';
+                    
                 $.each(data.query.results.rss, function (e, itm) {
                     s += '<li><div class="itemTitle"><a href="' + itm.channel.item.link + '" target="' + def.TitleLinkTarget + '" >' + itm.channel.item.title + '</a></div>';
-                    
+
                     if (def.ShowPubDate){
                         dt = new Date(itm.channel.item.pubDate);
                         s += '<div class="itemDate">';
@@ -42,7 +58,7 @@
                                 moment.lang(def.DateFormatLang);
                                 s += moment(dt).format(def.DateFormat);
                             }
-                            catch (e){s += dt.toLocaleDateString();}                            
+                            catch (e){s += dt.toLocaleDateString();}
                         }
                         else {
                             s += dt.toLocaleDateString();
